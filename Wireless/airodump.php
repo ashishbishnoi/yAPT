@@ -1,5 +1,4 @@
-<html>
-<body>
+
 <?php
 $card = shell_exec('iw dev | awk \'$1=="Interface"{print $2}\' | sed -e \'2d\' ');
 $message = "Monitor mode not  enabled";
@@ -11,6 +10,4 @@ $attack = shell_exec("sudo timeout 18 airodump-ng wlan1 &> file.txt 2>&1");
 	else {
 	echo "<pre>$message</pre>";
 	}
-?><br>
-</body>
-</html>
+?>

@@ -54,14 +54,13 @@
                         <a href="#" target="_blank" class="btn btn-danger btn-fill">Button</a>
                       </ul> -->
                       <ul class="nav navbar-nav navbar-right">
-                            <li>
-                                                            <a href="./index.html" class="btn btn-danger btn-fill">Monitor Mode</a>
-
-                            </li>
-                          
 			    <li>
-                              <a href="./pwa.html"  class="btn btn-danger btn-fill">Pwa</a>
+                            <a href="./index.html" class="btn btn-danger btn-fill">Monitor Mode</a>
 			    </li>
+			    <li>
+  <a href="./mdk.html" class="btn btn-danger btn-fill">Mdk</a>
+
+		            </li>
                        </ul>
                        
                     </div><!-- /.navbar-collapse -->
@@ -83,14 +82,11 @@
 	     <div class="section section-nude">
             <div class="container tim-container">
                 <div class="tim-title">
-                    <h2>MDK</h2>
+                    <h2>Aerodump</h2>
                 </div>
 
-		<p> <a onclick="pwrun()" target="_blank" class="btn btn-success btn-fill">Run</a>
-       <a onclick="kmdk()" class="btn btn-danger btn-fill">Stop</a>
-
-		</p>
-    <!-- content come here     -->
+		<p> <a onclick="aero()" class="btn btn-success btn-fill">Scan</a>
+		  </p>
 <p id="pwout"></p>
     
         </div>
@@ -114,9 +110,9 @@
 	<script src="assets/js/ct-paper.js"></script>
 
 <script>
-function pwrun(){
+function aero(){
 $.ajax({
-   url: './Wireless/mdk.php',
+   url: './Wireless/airodump.php',
    data: {
       format: 'text'
    },
@@ -131,22 +127,6 @@ $.ajax({
 
 }
 
-function kmdk(){
-$.ajax({
-   url: './Wireless/kmdk.php',
-   data: {
-      format: 'text'
-   },
-   error: function() {
-      $('#pwout').html('An error has occurred');
-   },
-   success: function(data) {
-      document.getElementById("pwout").innerHTML = data;
-   },
-   type: 'GET'
-});
-
-}
 </script>
 </html>
 

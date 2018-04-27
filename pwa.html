@@ -82,13 +82,17 @@
                 </div>
 		<p> <a onclick="pwrun()" target="_blank" class="btn btn-success btn-fill">Run</a>
 		  </p>
+		  <p>
+<p>
+    <div class="form-group has-error">
+        
+    BSSID:<input type="text" placeholder="Bssid" class="form-control" id="bssid"/>
+    
+    </div>   
+    <a onclick="pwsubmit()" class="btn btn-success btn-fill">Submit</a>
 
-<form action="/Wireless/pwa.php" method="get">
-Bssid: <input type="text" name="bssid"><br>
-<input type="submit">
-</form>    
+</p>
 
-<!-- content come here     -->
 <p id="pwout"></p>
     
         </div>
@@ -127,6 +131,23 @@ $.ajax({
    type: 'GET'
 });
 
+}
+
+function pwsubmit(){
+var bid = document.getElementById("bssid").value;
+$.ajax({
+   url: './Wireless/pwa.php?bssid='+bid,
+   data: {
+      format: 'text'
+   },
+   error: function() {
+      $('#pwout').html('An error has occurred');
+   },
+   success: function(data) {
+      document.getElementById("pwout").innerHTML = data;
+   },
+   type: 'GET'
+});
 }
 </script>
 </html>

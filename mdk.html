@@ -97,8 +97,17 @@
     BSSID:<input type="text" placeholder="Bssid" class="form-control" id="bssid"/>
 
     </div>
-    <a onclick="pwsubmit()" class="btn btn-success btn-fill">Submit</a>
+   
+</p>
+<p>
+    <div class="form-group has-error">
 
+    Channel:<input type="text" placeholder="Channel" class="form-control" id="chid"/>
+
+    </div>
+</p>
+<p>
+    <a onclick="pwsubmit()" class="btn btn-success btn-fill">Submit</a>
 </p>
 
 <p id="pwout"></p>
@@ -160,8 +169,9 @@ $.ajax({
 
 function pwsubmit(){
 var bid = document.getElementById("bssid").value;
+var cid = document.getElementById("chid").value;
 $.ajax({
-   url: './Wireless/aireplay.php?bssid='+bid,
+   url: './Wireless/aireplay.php?bssid='+bid+'&chid='+cid,
    data: {
       format: 'text'
    },

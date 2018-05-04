@@ -18,7 +18,13 @@
     <link href="assets/css/fa.css" rel="stylesheet">
     <link href='assets/css/mon.css' rel='stylesheet' type='text/css'>
     <link href='assets/css/sans.css' rel='stylesheet' type='text/css'>
-      
+     
+    <style>
+body {
+    background-color: #FFFCF5;
+    padding-bottom: 100px;
+}
+    </style>
 </head>
 <body>
     
@@ -78,7 +84,8 @@
 
 <div class="wrapper">
    
-	     <div class="section section-nude" style="position:fixed;width: 100%;height: 100%;">
+	     
+		 
             <div class="container tim-container">
                 <div class="tim-title">
                     <h2>Monitor mode</h2>
@@ -96,15 +103,8 @@
 <p id="monout"></p>
     <pre id="ti">Time Taken :-</pre>
         </div>
-    </div>
+    
 </div>
-
-
-
-<!-- Modal Bodies come here -->
-
-<!--   end modal -->
-
 
 </body>
 
@@ -178,12 +178,5 @@ $.ajax({
 
 }
 
-/*
-function mts(millis) {
-  var minutes = Math.floor(millis / 60000);
-  var seconds = ((millis % 60000) / 1000).toFixed(0);
-  return minutes + ":" + (seconds < 10 ? '0' : '') + seconds + ":" + millis;
-}
-*/
 </script>
 </html>

@@ -20,7 +20,14 @@
     <link href="assets/css/fa.css" rel="stylesheet">
     <link href='assets/css/mon.css' rel='stylesheet' type='text/css'>
     <link href='assets/css/sans.css' rel='stylesheet' type='text/css'>
-      
+   
+
+        <style>
+body {
+    background-color: #FFFCF5;
+    padding-bottom: 100px;
+}
+    </style>
 </head>
 <body>
     
@@ -80,17 +87,19 @@
 
 <div class="wrapper">
    
-	     <div class="section section-nude" style="position:fixed;width: 100%;height: 100%;">
+	     
             <div class="container tim-container">
                 <div class="tim-title">
                     <h2>MDK</h2>
                 </div>
 
-		<p> <a onclick="pwrun()" target="_blank" class="btn btn-success btn-fill">Run</a>
+		<p> <a onclick="kill()" target="_blank" class="btn btn-success btn-fill">MDK ALL</a>
        <a onclick="kmdk()" class="btn btn-danger btn-fill">Stop</a>
                 		 <img style="visibility:hidden;" id="load" src="assets/load.gif" alt="Loading...">
 		</p>
-    <!-- content come here     -->
+		<hr>
+		<p>  <a onclick="pwrun()" class="btn btn-danger btn-fill">Scan</a>  <img style="visibility:hidden;" id="load3" src="assets/load.gif" alt="Loading...">
+ </p>
 <p>
     <div class="form-group has-error">
 
@@ -102,10 +111,19 @@
 <p>
     <div class="form-group has-error">
 
-    Channel:<input type="text" placeholder="Channel" class="form-control" id="chid"/>
+    Channel:<input type="number" placeholder="Channel" class="form-control" id="chid" min="0"/>
 
     </div>
 </p>
+
+<p>
+    <div class="form-group has-error">
+
+    Number of Packets:<input type="number" placeholder="Number of Packets" min="1" class="form-control" id="nump"/>
+
+    </div>
+</p>
+
 <p>
     <a onclick="pwsubmit()" class="btn btn-success btn-fill">Submit</a>
     		 <img style="visibility:hidden;" id="load2" src="assets/load.gif" alt="Loading...">
@@ -116,7 +134,7 @@
 
     
         </div>
-    </div>
+   
 </div>
  
 </body>
@@ -137,8 +155,34 @@
         <script src="assets/ti.js"></script>
 
 <script>
-function pwrun(){
+
+function kill(){
 	document.getElementById("load").style.visibility = "visible";
+var ajaxTime= new Date().getTime();
+
+$.ajax({
+   url: './Wireless/mdk.php',
+   data: {
+      format: 'text'
+   },
+   error: function() {
+      $('#pwout').html('An error has occurred');
+   },
+   success: function(data) {
+      document.getElementById("pwout").innerHTML = data;
+document.getElementById("load").style.visibility = "hidden";
+var totalTime = new Date().getTime()-ajaxTime;
+	   var tt=mts(totalTime);
+      document.getElementById("ti").innerHTML = 'Time Taken :- '+tt;
+   },
+   type: 'GET'
+});
+
+}
+
+
+function pwrun(){
+	document.getElementById("load3").style.visibility = "visible";
 var ajaxTime= new Date().getTime();
 
 $.ajax({
@@ -151,7 +195,7 @@ $.ajax({
    },
    success: function(data) {
       document.getElementById("pwout").innerHTML = data;
-document.getElementById("load").style.visibility = "hidden";
+document.getElementById("load3").style.visibility = "hidden";
 var totalTime = new Date().getTime()-ajaxTime;
 	   var tt=mts(totalTime);
       document.getElementById("ti").innerHTML = 'Time Taken :- '+tt;
@@ -189,10 +233,12 @@ function pwsubmit(){
 	document.getElementById("load2").style.visibility = "visible";
 var bid = document.getElementById("bssid").value;
 var cid = document.getElementById("chid").value;
+var npk = document.getElementById("nump").value;
+
 var ajaxTime= new Date().getTime();
 
 	$.ajax({
-   url: './Wireless/aireplay.php?bssid='+bid+'&chid='+cid,
+   url: './Wireless/aireplay.php?bssid='+bid+'&chid='+cid+'&npk='+npk,
    data: {
       format: 'text'
    },

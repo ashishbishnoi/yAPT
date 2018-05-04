@@ -75,12 +75,14 @@
 
 <div class="wrapper">
    
-	     <div class="section section-nude">
+	     <div class="section section-nude" style="position:fixed;width: 100%;height: 100%;">
             <div class="container tim-container">
                 <div class="tim-title">
                     <h2>PWA</h2>
                 </div>
-		<p> <a onclick="pwrun()" target="_blank" class="btn btn-success btn-fill">Run</a>
+		<p> <a onclick="pwrun()" target="_blank" class="btn btn-success btn-fill">Scan</a>
+				 <img style="visibility:hidden;" id="load" src="assets/load.gif" alt="Loading...">
+
 		  </p>
 		  <p>
 <p>
@@ -90,11 +92,12 @@
     
     </div>   
     <a onclick="pwsubmit()" class="btn btn-success btn-fill">Submit</a>
-
+		 <img style="visibility:hidden;" id="load2" src="assets/load.gif" alt="Loading...">
 </p>
 
 <p id="pwout"></p>
-    
+        <pre id="ti">Time Taken :-</pre>
+
         </div>
     </div>
 </div>
@@ -114,9 +117,13 @@
     
 	
 	<script src="assets/js/ct-paper.js"></script>
+        <script src="assets/ti.js"></script>
 
 <script>
 function pwrun(){
+	document.getElementById("load").style.visibility = "visible";
+var ajaxTime= new Date().getTime();
+
 $.ajax({
    url: './Wireless/scan_pwa.php',
    data: {
@@ -126,7 +133,11 @@ $.ajax({
       $('#pwout').html('An error has occurred');
    },
    success: function(data) {
-      document.getElementById("pwout").innerHTML = data;
+document.getElementById("load").style.visibility = "hidden";
+	 document.getElementById("pwout").innerHTML = data;
+var totalTime = new Date().getTime()-ajaxTime;
+	   var tt = mts(totalTime);
+      document.getElementById("ti").innerHTML = 'Time Taken :- '+tt;
    },
    type: 'GET'
 });
@@ -134,7 +145,10 @@ $.ajax({
 }
 
 function pwsubmit(){
+	document.getElementById("load2").style.visibility = "visible";
 var bid = document.getElementById("bssid").value;
+var ajaxTime= new Date().getTime();
+
 $.ajax({
    url: './Wireless/pwa.php?bssid='+bid,
    data: {
@@ -144,7 +158,11 @@ $.ajax({
       $('#pwout').html('An error has occurred');
    },
    success: function(data) {
-      document.getElementById("pwout").innerHTML = data;
+    document.getElementById("load2").style.visibility = "hidden";
+document.getElementById("load").style.visibility = "hidden";
+	   var totalTime = new Date().getTime()-ajaxTime;
+	   var tt=mts(totalTime);
+      document.getElementById("ti").innerHTML = 'Time Taken :- '+tt;
    },
    type: 'GET'
 });

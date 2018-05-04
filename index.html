@@ -78,7 +78,7 @@
 
 <div class="wrapper">
    
-	     <div class="section section-nude">
+	     <div class="section section-nude" style="position:fixed;width: 100%;height: 100%;">
             <div class="container tim-container">
                 <div class="tim-title">
                     <h2>Monitor mode</h2>
@@ -88,10 +88,13 @@
 		
 		<a onclick="mon()" target="_blank" class="btn btn-success btn-fill">Start</a>
 		 <a onclick="nomon()" target="_blank" class="btn btn-danger btn-fill">Stop</a>
+
+		 <img style="visibility:hidden;" id="load" src="assets/load.gif" alt="Loading...">
+
 		 </p>
     <!-- content come here     -->
 <p id="monout"></p>
-    
+    <pre id="ti">Time Taken :-</pre>
         </div>
     </div>
 </div>
@@ -118,9 +121,15 @@
     
 	
 	<script src="assets/js/ct-paper.js"></script>
-
+        <script src="assets/ti.js"></script>
 <script>
+
 function mon(){
+
+document.getElementById("load").style.visibility = "visible";
+
+var ajaxTime= new Date().getTime();
+
 $.ajax({
    url: './Wireless/monstart.php',
    data: {
@@ -131,6 +140,11 @@ $.ajax({
    },
    success: function(data) {
       document.getElementById("monout").innerHTML = data;
+      document.getElementById("load").style.visibility = "hidden";
+
+	       var totalTime = new Date().getTime()-ajaxTime;
+	       var tt = mts(totalTime);
+      document.getElementById("ti").innerHTML = 'Time Taken :- '+tt;
    },
    type: 'GET'
 });
@@ -139,6 +153,8 @@ $.ajax({
 
 
 function nomon(){
+document.getElementById("load").style.visibility = "visible";
+var ajaxTime= new Date().getTime();
 
 $.ajax({
    url: './Wireless/monstop.php',
@@ -150,6 +166,10 @@ $.ajax({
    },
    success: function(data) {
       document.getElementById("monout").innerHTML = data;
+	   document.getElementById("load").style.visibility = "hidden";
+	    var totalTime = new Date().getTime()-ajaxTime;
+	   var tt = mts(totalTime);
+      document.getElementById("ti").innerHTML = 'Time Taken :- '+tt;
    },
    type: 'GET'
 });
@@ -158,5 +178,12 @@ $.ajax({
 
 }
 
+/*
+function mts(millis) {
+  var minutes = Math.floor(millis / 60000);
+  var seconds = ((millis % 60000) / 1000).toFixed(0);
+  return minutes + ":" + (seconds < 10 ? '0' : '') + seconds + ":" + millis;
+}
+*/
 </script>
 </html>

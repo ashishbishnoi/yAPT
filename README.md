@@ -1,2 +1,2 @@
 # yAPT
-WEB+Android frameworks for Securing wireless network and Devices.
+A Web Pentesting UI for Raspberrypi and other Dropboxes.

